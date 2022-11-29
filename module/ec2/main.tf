@@ -10,9 +10,10 @@ user_data = <<-EOF
     sudo apt update -y
     sudo apt install nginx -y
     sudo apt install docker.io -y
+    hostnamectl set-hostname ${each.value["name"]}
 EOF
   tags = {  
-     Name = "${each.value ["name"] }"
+     Name = "${each.value["name"]}"
   
   }
   
