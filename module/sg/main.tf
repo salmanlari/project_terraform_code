@@ -4,7 +4,7 @@ resource "aws_security_group" "sg" {
     for_each        = var.sg_details
     name            = each.value["name"]
     description     = each.value["description"]
-    vpc_id          = each.value["vpc_id"]
+    vpc_id          = var.vpc_id
 
     dynamic "ingress" {
 for_each     = lookup(each.value, "ingress_rules",[])

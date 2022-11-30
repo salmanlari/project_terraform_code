@@ -24,17 +24,17 @@ resource "aws_subnet" "pub_snet" {
   }
 }
 
-#PVT_SUBNET
-resource "aws_subnet" "pvt_snet" {
-  vpc_id     = aws_vpc.aws_vpc.id
-  cidr_block = var.pvt_cidr_block
+# #PVT_SUBNET
+# resource "aws_subnet" "pvt_snet" {
+#   vpc_id     = aws_vpc.aws_vpc.id
+#   cidr_block = var.pvt_cidr_block
 
-   tags = {
-    Name = "${terraform.workspace}_vpc"
+#    tags = {
+#     Name = "${terraform.workspace}_vpc"
 
-  }
+#   }
 
-}
+# }
 
 #IGW
 
