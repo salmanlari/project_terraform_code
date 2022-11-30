@@ -42,6 +42,7 @@ module "ec2" {
     ami_id             = var.ami_id 
     ec2_type           = var.ec2_type 
     ssh_key            = var.ssh_key
+    
     subnet1 ={                                                               
         snet_1={
             subnet = lookup(module.nw.pub_snet_output_id,"pub_snet_1",null).id  
