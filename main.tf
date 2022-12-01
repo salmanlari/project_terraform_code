@@ -64,3 +64,7 @@ module "ec2" {
      sg = lookup(module.sg.sg_output_id, "ec2-sg", null)
 
 }
+
+output "ec2_output" {
+    value = module.ec2.ec2_output
+}

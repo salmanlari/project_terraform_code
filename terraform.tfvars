@@ -56,4 +56,5 @@ sg_details = {
 
 ami_id             = "ami-08c40ec9ead489470"  
 ec2_type           = "t2.micro" 
-ssh_key            = "salman_nv_key"
+ssh_key            = "ec2_key"
+
