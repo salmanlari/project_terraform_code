@@ -7,63 +7,42 @@ provider "aws" {
 
 module "nw" {
 source = "./module/nw"
-vpccidr = "10.0.0.0/16"
-pub_subnet = {
-  pub_snet_1 = {
-    pub_az = "us-east-1a"
-    pub_cidr_block = "10.0.1.0/24"
-  }
- pub_snet_2 = {
-    pub_az = "us-east-1b"
-    pub_cidr_block = "10.0.2.0/24"
-  }
-   pub_snet_3 = {
-    pub_az = "us-east-1c"
-    pub_cidr_block = "10.0.3.0/24"
-}
-}
-pvt_cidr_block = "10.0.4.0/24"
+vpccidr = var.ipv4_vpccidr
+pub_subnet = var.pub_subnet
+#   pub_snet_1 = {
+# #     pub_az = var.pub_az_1
+# #     pub_cidr_block = var.ipv4_pub_cidr_block1
+# #   }
+# #  pub_snet_2 = {
+# #     pub_az = var.pub_az_2
+# #     pub_cidr_block = var.ipv4_pub_cidr_block2
+# #   }
+# #    pub_snet_3 = {
+# #     pub_az = var.pub_az_3
+# #     pub_cidr_block = var.ipv4_pub_cidr_block3
+# # }
+# }
+# pvt_cidr_block = var.ipv4_pvt_cidr_block4
 
 }
 
-# ec2 security group
+# # ec2 security group
 
 module "sg" {
     source = "./module/sg"
-    sg_details = {
-    ec2-sg ={
-        name            ="ec2"
-        description     = "all incoming"
-        vpc_id          = module.nw.aws_vpc_output_id
-        ingress_rules =[
-           {
-                from_port   = "80"
-                to_port     = "80"
-                protocol    = "tcp"
-                cidr_blocks = ["0.0.0.0/0"]
-                self        = null                
-            },
-            {
-                from_port    = "22"
-                to_port      = "22"
-                protocol     = "tcp"
-                cidr_blocks  = ["0.0.0.0/0"]
-                self         = null
-            },
-
-        ]
-    }
-    }
+    vpc_id                   = module.nw.aws_vpc_output_id
+    sg_details               = var.sg_details
 
 }
 
-#EC2 
+# #EC2 
 
 module "ec2" {
     source             = "./module/ec2"
-    ami_id             = "ami-08c40ec9ead489470"  
-    ec2_type           = "t2.micro" 
-    ssh_key            = "salman_nv_key"
+    ami_id             = var.ami_id 
+    ec2_type           = var.ec2_type 
+    ssh_key            = var.ssh_key
+    
     subnet1 ={                                                               
         snet_1={
             subnet = lookup(module.nw.pub_snet_output_id,"pub_snet_1",null).id  
@@ -84,4 +63,8 @@ module "ec2" {
     }
      sg = lookup(module.sg.sg_output_id, "ec2-sg", null)
 
+}
+
+output "ec2_output" {
+    value = module.ec2.ec2_output
 }
