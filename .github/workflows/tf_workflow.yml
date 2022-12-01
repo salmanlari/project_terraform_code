@@ -30,11 +30,13 @@ jobs:
 
       - run: terraform init 
 
-      - name: terraform plan
-        uses: dflook/terraform-plan@v1
+      - run: terraform destroy -auto-approve
 
-      - name: terraform apply 
-        uses: dflook/terraform-apply@v1
+      # - name: terraform plan
+      #   uses: dflook/terraform-plan@v1
+
+      # - name: terraform apply 
+      #   uses: dflook/terraform-apply@v1
 
 
     
