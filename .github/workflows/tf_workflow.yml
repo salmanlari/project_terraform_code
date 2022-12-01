@@ -3,7 +3,7 @@ name: terraform execution
 on:
   push:
     branches: [ "feature" ]
-   pull_request:
+  pull_request:
     
 
 jobs:
